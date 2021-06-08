@@ -17,17 +17,7 @@ export class HolidaysService {
   // }
 
   async createHoliday(createHolidayDto: CreateHolidayDto): Promise<Holiday> {
-    const { name, date } = createHolidayDto;
-
-    const holiday = new Holiday();
-
-    holiday.name = name;
-    holiday.date = date;
-    holiday.type = HolidaysType.NACIONAL;
-
-    await holiday.save(); //F5 no dataBase
-
-    return holiday;
+    return this.holidayRepository.createHoliday(createHolidayDto);
   }
 
   async getHolidayById(id: number): Promise<Holiday> {
@@ -43,13 +33,18 @@ export class HolidaysService {
   // getHolidayById(id: string): Holiday {
   //   return this.holidays.find((holiday) => holiday.id == id);
   // }
-  // deleHoliday(id: string): void {
-  //   this.holidays = this.holidays.filter((holiday) => holiday.id !== id);
-  // }
-  // updateHoliday(id: string, name: string, date: Date): Holiday {
-  //   const holiday = this.getHolidayById(id);
-  //   holiday.name = name;
-  //   holiday.date = date;
-  //   return holiday;
-  // }
+
+  async deleHoliday(id: number): Promise<void> {
+    const result = await this.holidayRepository.delete(id);
+    console.log(result);
+  }
+
+  async updateHoliday(id: number, name: string, date: Date): Promise<Holiday> {
+    const holiday = await this.getHolidayById(id);
+    holiday.name = name;
+    holiday.date = date;
+
+    await holiday.save();
+    return holiday;
+  }
 }

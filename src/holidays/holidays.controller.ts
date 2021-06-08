@@ -31,17 +31,17 @@ export class HolidaysController {
     return this.holidaysService.createHoliday(createHolidayDto);
   }
 
-  // @Delete('/:id')
-  // deleteHoliday(@Param('id') id: string) {
-  //   this.holidaysService.deleHoliday(id);
-  // }
+  @Delete('/:id')
+  deleteHoliday(@Param('id') id: number): Promise<void> {
+    return this.holidaysService.deleHoliday(id);
+  }
 
-  // @Patch('/:id')
-  // updateHoliday(
-  //   @Param('id') id: string,
-  //   @Body('name') name: string,
-  //   @Body('date') date: Date,
-  // ): Holiday {
-  //   return this.holidaysService.updateHoliday(id, name, date);
-  // }
+  @Patch('/:id')
+  updateHoliday(
+    @Param('id') id: number,
+    @Body('name') name: string,
+    @Body('date') date: Date,
+  ): Promise<Holiday> {
+    return this.holidaysService.updateHoliday(id, name, date);
+  }
 }
